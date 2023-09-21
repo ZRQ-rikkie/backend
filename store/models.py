@@ -1,9 +1,13 @@
 from django.db import models
 
-# Create your models here.
+class Promotion(models.Model):
+    description = models.CharField(max_length=255)
+    discount = models.FloatField()
+
 
 class Collection(models.Model):
     title = models.CharField(max_length=255)
+    featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL,null = True,related_name='+')
 
 class Product(models.Model):
     title = models.CharField(max_length =255)
@@ -12,6 +16,10 @@ class Product(models.Model):
     iventory = models.IntegerField()
     last_update = models.DateTimeField(auto_now_add=True)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
+    promotions = models.ManyToManyField(Promotion)
+
+
+
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = 'B'
@@ -25,7 +33,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length =255)
     last_name = models.CharField(max_length =255)
     email = models.EmailField(unique=True)
-    phone = models.CharFieldField(max_length =255)
+    phone = models.CharField(max_length =255)
     birth_date = models.DateField(null=True)
     membership = models.CharField(max_length=1, choices = MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
 
@@ -52,11 +60,11 @@ class Address(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Collection, on_delete=models.PROTECT)
-    product = models.ForeignKey(Collection, on_delete=models.PROTECT)
+    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveSmallIntegerField()
-    unit_price = models.DateTimeField(max_digits=6, decimal_places=2)
-    cart = models.ForeignKey(Collection, on_delete=models.CASCADE)
+    unit_price = models.DecimalField(max_digits=6, decimal_places=2)
+
 
 
 class Cart(models.Model):

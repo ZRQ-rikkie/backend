@@ -36,7 +36,6 @@ Run without Debugging.
 Django debug toolbar
 The toolbar only shows when return a proper HTML documents(html,body)
 
-
 ## Models
 
 Association class
@@ -48,3 +47,17 @@ A good design should be:
 **minimal coupling** and **high cohesion**(focus)
 
 models
+
+one to one relationship
+
+one to many relationship
+
+many to many relationship
+
+Circular Dependency(should avoid)
+
+Generic Relationships
+
+Use `ContentType`
+
+## SetUp Database
