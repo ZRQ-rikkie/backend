@@ -76,4 +76,42 @@ python manage.py migrate store <number>
 git log --online
 git reset --hard HEAD~1
 ```
+
 make the head pointer one step back
+
+use
+
+```
+python manage.py makemigrations store --empty
+
+```
+
+```
+operations = [
+        migrations.RunSQL(
+                        <!-- SQL -->
+
+                        """
+                          INSERT INTO store_collection(title)
+                          VALUES('collection1')
+
+                          """,
+                        <!-- Reverse SQL -->
+
+                          """
+                          DELETE FROM store_collection
+                          WHERE title = 'collection1'
+                          """,)
+    ]
+
+```
+
+Use [Mockaroo.com](https://www.mockaroo.com) for dummy data
+
+## Django ORM
+
+**Object-relational mappers**
+
+* Reduce complexity in code
+* Make the code more understandable
+* get more done in less
