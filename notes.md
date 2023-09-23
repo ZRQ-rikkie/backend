@@ -61,3 +61,19 @@ Generic Relationships
 Use `ContentType`
 
 ## SetUp Database
+
+Default: sqlite
+Meat Data
+undo the last migration
+
+```
+
+python manage.py migrate store <number>
+
+```
+
+```
+git log --online
+git reset --hard HEAD~1
+```
+make the head pointer one step back
