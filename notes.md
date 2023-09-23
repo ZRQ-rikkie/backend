@@ -120,7 +120,55 @@ Every model in django has an attribute called objects
 
 This returns a manager object (Interface to the database)
 
+#### Filter Function
 
-`first()` function of `filter() `
+`first()` function of `filter()`return `None`
 
-return `None `
+`exists()` return boolean
+
+```
+__gt
+__lt
+__gte
+__lte
+```
+
+search for queryset API
+[https://docs.djangoproject.com/en/4.2/ref/models/querysets/]()
+
+#### complex lookups using Q object
+
+multi ways:
+
+**AND**
+
+```
+SELECT ••• FROM store_product WHERE (store_product.inventory < 10 AND store_product.unit_price < 20)
+```
+
+* ```
+  queryset = Product.objects.filter(
+          inventory__lt=10, unit_price__lt=20)
+  ```
+* ```
+
+  queryset = Product.objects.filter(
+          inventory__lt=10).filter(unit_price__lt=20)
+
+  ```
+
+**OR**
+
+```
+SELECT ••• FROM store_product WHERE (store_product.inventory < 10 OR store_product.unit_price < 20)
+```
+
+1. ```
+   from django.db.models import Q
+   ```
+
+2. ```
+   queryset = Product.objects.filter(Q(inventory__lt=10) | Q(unit_price__lt=20))
+   ```
+
+
