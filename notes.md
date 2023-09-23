@@ -1,7 +1,3 @@
-```
-
-```
-
 ## Setup
 
 pipenv to mange python environment
@@ -120,7 +116,7 @@ Every model in django has an attribute called objects
 
 This returns a manager object (Interface to the database)
 
-#### Filter Function
+### Filter Function
 
 `first()` function of `filter()`return `None`
 
@@ -136,7 +132,7 @@ __lte
 search for queryset API
 [https://docs.djangoproject.com/en/4.2/ref/models/querysets/]()
 
-#### complex lookups using Q object
+* #### complex lookups using Q object
 
 multi ways:
 
@@ -166,9 +162,21 @@ SELECT ••• FROM store_product WHERE (store_product.inventory < 10 OR store
 1. ```
    from django.db.models import Q
    ```
-
 2. ```
    queryset = Product.objects.filter(Q(inventory__lt=10) | Q(unit_price__lt=20))
    ```
 
+* #### Referencing Fields using F
 
+```
+SELECT ••• FROM store_product WHERE store_product.inventory = (store_product.unit_price)
+```
+
+1. ```
+   from django.db.models import F
+   ```
+2. ```
+   queryset = Product.objects.filter(inventory=F('unit_price'))
+   ```
+
+### Sorting Data
