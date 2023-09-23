@@ -115,3 +115,12 @@ Use [Mockaroo.com](https://www.mockaroo.com) for dummy data
 * Reduce complexity in code
 * Make the code more understandable
 * get more done in less
+
+Every model in django has an attribute called objects
+
+This returns a manager object (Interface to the database)
+
+
+`first()` function of `filter() `
+
+return `None `
