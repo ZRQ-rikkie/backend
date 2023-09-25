@@ -180,3 +180,42 @@ SELECT ••• FROM store_product WHERE store_product.inventory = (store_produ
    ```
 
 ### Sorting Data
+
+**ASC**
+
+```
+SELECT ••• FROM store_product ORDER BY store_product.title ASC
+```
+
+* ```
+  queryset = Product.objects.order_by('title')
+  ```
+
+**DESC**
+
+```
+SELECT ••• FROM store_product ORDER BY store_product.title DESC
+```
+
+* ```
+  queryset = Product.objects.order_by('-title')
+  ```
+
+**Unit Sort**
+
+```
+queryset = Product.objects.order_by('unit_price', '-title').reverse()
+```
+
+**.earliest()**
+sort objects and get the first object
+
+```
+queryset = Product.objects.earlist('unit_price')
+```
+**.latest()**
+sort objects in desending order and get the first object
+
+```
+queryset = Product.objects.latest('unit_price')
+```
