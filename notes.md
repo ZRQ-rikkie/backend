@@ -311,3 +311,61 @@ from django.db.models.functions import Concat
 from django.db.models import Expression Wrapper
 
 #### Querying Generic Relationships
+
+```
+fromdjango.contrib.contenttypes.modelsimportContentType
+```
+
+```
+content_type = ContentType.object.get_for_model(Product)
+    queryset = TaggedItem.objects.select_related('tag').filter(
+        content_type = content_type,
+        object_id = 1
+    )
+```
+
+#### Custom Manager
+
+#### QuerySet Cache
+
+read obect from the queryset cache
+
+#### Creating objects
+
+use tradtional way
+or `use objects.create()`
+
+* updating:
+  get the object at first
+  `.get()`
+  or use `objects.update()`
+* deleting:
+  `.delete()`
+  for delet multiple object first get a queryset
+
+#### Transactions
+
+```
+from django.db import transaction
+```
+
+use decoration:
+`@ transaction.atomic `or
+`with transaction.atomic:`
+
+Executing Raw SQL Queries
+
+* method 1:
+  ```
+  queryset = Product.objects.raw('SELECT*FROM store_product')
+  ```
+* method 2:
+  ```
+  with connection.cursor() as cursor:
+        cursor.execute('SELECT*FROM store_product')
+  ```
+* method 3:
+```
+  with connection.cursor() as cursor:
+        cursor.callproc('SELECT*FROM store_product')
+  ```
