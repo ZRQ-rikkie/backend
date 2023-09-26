@@ -211,11 +211,103 @@ queryset = Product.objects.order_by('unit_price', '-title').reverse()
 sort objects and get the first object
 
 ```
-queryset = Product.objects.earlist('unit_price')
+product = Product.objects.earlist('unit_price')
 ```
+
 **.latest()**
 sort objects in desending order and get the first object
 
 ```
-queryset = Product.objects.latest('unit_price')
+product = Product.objects.latest('unit_price')
 ```
+
+#### Limiting Results
+
+```
+ queryset = Product.objects.all()[:5]
+```
+
+#### Slecting Fields to Query
+
+`.values()` returns dictionary
+
+```
+queryset = Product.objects.values('id','title')
+```
+
+```
+reading related field
+queryset = Product.objects.values('id','title','collection__title')
+```
+
+```
+SELECT store_product.id,
+       store_product.title,
+       store_collection.title
+  FROM store_product
+ INNER JOIN store_collection
+    ON (store_product.collection_id = store_collection.id)
+```
+
+`.value_list()` returns tuples
+`.distinct()` to solve the duplicate
+
+```
+queryset = Product.objects.filter(id__in=OrderItem.objects.values(
+        'product_id').distinct()).order_by('title')
+```
+
+Deferring Field
+
+```
+queryset = Product.objects.only('id','title')
+```
+
+`.only()` return objects
+`.values()` return dictionary
+
+`.defer()` the opposite from `.only()`
+
+#### Slecting Related Object
+
+```
+queryset = Product.objects.select_related('collection').all()
+```
+
+```
+SELECT ••• FROM store_product INNER JOIN store_collection ON (store_product.collection_id = store_collection.id)
+```
+
+select_related(1)
+prefetch_related(n)
+
+#### Aggregating
+
+```
+from django.db.models.aggregates import Count, Max,Min, Avg, Sum
+```
+
+return a dictionary
+
+#### Annotating Objects
+
+```
+from django.db.models import Value
+.annotate()
+```
+
+#### Calling Database Functions
+
+CONCAT
+
+```
+from django.db.models.functions import Concat
+```
+
+#### Grouping Data
+
+#### Expression Wrappers
+
+from django.db.models import Expression Wrapper
+
+#### Querying Generic Relationships
