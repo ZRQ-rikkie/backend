@@ -365,7 +365,20 @@ Executing Raw SQL Queries
         cursor.execute('SELECT*FROM store_product')
   ```
 * method 3:
+
 ```
   with connection.cursor() as cursor:
         cursor.callproc('SELECT*FROM store_product')
-  ```
+```
+
+## Admin Interface
+
+crate new admin:
+
+```
+python manage.py createsuperuser
+```
+
+Adding `django.contrib.sessions` to `INSTALLED_APP` and `migrate `command to generate the session table
+
+#### Registering Models
