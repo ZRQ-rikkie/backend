@@ -382,3 +382,99 @@ python manage.py createsuperuser
 Adding `django.contrib.sessions` to `INSTALLED_APP` and `migrate `command to generate the session table
 
 #### Registering Models
+
+admin.site.register(models.Collection)
+
+#### Customize the listing page
+
+use register decorater
+Django ModelAdmin
+
+#### Customize the listing page
+
+Adding Computed Columns
+
+```
+list_display =
+list_editable =
+list_per_page =
+```
+
+#### Selecting Related Object
+
+```
+list_select_related
+```
+
+to preload the related objects
+
+#### Overriding the base queryset
+
+#### Providing Links to Other Pages
+
+```
+from django.utils.html import format_html
+```
+
+```
+def products_count(self,collection):
+        return format_html('<a href="http://google.com">{}</a>',collection.products_count)
+```
+
+```
+from django.urls import reverse
+```
+
+```
+def products_count(self,collection):
+        url = reverse('admin:store_product_changelist')
+        return format_html('<a href="{}">{}</a>',url,collection.products_count)
+```
+
+#### Adding search
+
+```
+search_fields = ['first_name','last_name']
+```
+
+`__startswith` lookup type
+
+#### Adding filter
+
+```
+list_filter = ['collection', 'last_update']
+```
+
+create a filter:
+
+```
+class InventoryFilter(admin.SimpleListFilter):
+    title = 'inventory'
+    parameter_name = 'inventory'    def lookups(self, request, model_admin):
+        return [
+            ('<10', 'low')        ]    def queryset(self, request, queryset:QuerySet):
+        if self.value() == '<10':
+            return queryset.filter(inventory__lt=10)
+```
+
+#### Creating Custom Action
+
+```
+actions = ['clear_inventory']@admin.action(description='Set inventory to 0')
+    def clear_inventory(self, request, queryset):
+        updated_count = queryset.update(inventory = 0)
+        self.message_user(
+            request,
+            f'{updated_count} products were successfully updated'
+        )
+```
+
+return error message:
+`from django.contrib import admin, messages`
+
+
+```
+self.message_user(            request,            f'{updated_count} products were successfully updated',            messages.ERROR    )
+```
+
+#### Customize Forms
