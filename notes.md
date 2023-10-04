@@ -472,9 +472,41 @@ actions = ['clear_inventory']@admin.action(description='Set inventory to 0')
 return error message:
 `from django.contrib import admin, messages`
 
-
 ```
 self.message_user(            request,            f'{updated_count} products were successfully updated',            messages.ERROR    )
 ```
 
 #### Customize Forms
+
+`files`,` exclude`, `readonly_fields`, `prepopulated_fields`
+
+#### Adding Data Validation
+
+make the value nullable
+`blank=True`
+
+set the min value
+
+```
+from django.core.validators import MinValueValidator unit_price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        validators =[MinValueValidator(1)])
+```
+
+#### Editing Children Using Inlines
+
+```
+class OrderItemInline(admin.TabularInline):
+    model = models.OrderItem
+```
+
+admin.StackedInline
+
+#### Using Generic Relations
+
+```
+from django.contrib.contenttypes.admin import GenericTabularInline
+```
+
+#### Extending Pluggable Apps
