@@ -601,4 +601,23 @@ def product_detail(request, id):
 ```
 
 #### Deleting Object
+
 httpstatus.com
+
+## Advanced API concepts
+
+#### class based view
+
+**benefit:**
+
+* write cleaner code
+
+#### Mixins
+
+```
+from rest_framework.mixins import ListModelMixin,CreateModelMixin
+```
+
+*search for gerneric views in Django docs*
+
+#### Gerneric Vies
