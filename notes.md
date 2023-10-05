@@ -510,3 +510,95 @@ from django.contrib.contenttypes.admin import GenericTabularInline
 ```
 
 #### Extending Pluggable Apps
+
+## RESTful API
+
+**Restful:** Representational State Transfer
+
+* Resources
+* Representations
+* HTTP Methods
+  GET
+  POST
+  PUT
+  PATCH
+  DELTE
+
+```
+pipenv install djangorestframework
+```
+
+view function is take a request and return a response
+
+```
+from rest_framework.decorators import api_view
+@api_view()
+def product_list(request):
+    return Response('ok')
+```
+
+#### Creating Serializers
+
+```
+from rest_framework import status
+......
+  return Response(status=status.HTTP_404_NOT_FOUND)
+```
+
+```
+from django.shortcuts import get_object_or_404
+this wrap off the try except
+```
+
+#### Custom Serializer Field
+
+#### Serializing Relationships
+
+* Primary Key
+* String Values
+* Nested Object
+* Hyperlinks
+
+#### Model Serializer
+
+`serializers.ModelSerializer`
+
+#### Deserializing Objects
+
+save data from the clients
+
+```
+elif request.method == 'POST':
+        serializer = ProductSerializer(data = request.data)
+        # serializer.validated_data
+        return Response('ok')
+```
+
+#### Data Validation
+
+```
+elif request.method == 'POST':
+        serializer = ProductSerializer(data = request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data
+        return Response('ok')
+```
+
+#### Save data to the database
+
+```
+@api_view(['GET', 'PUT'])
+def product_detail(request, id):
+    product = get_object_or_404(Product, pk=id)
+    if request.method == 'GET':
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ProductSerializer(product, data = request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+```
+
+#### Deleting Object
+httpstatus.com
