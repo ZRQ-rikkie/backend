@@ -620,4 +620,27 @@ from rest_framework.mixins import ListModelMixin,CreateModelMixin
 
 *search for gerneric views in Django docs*
 
-#### Gerneric Vies
+#### Gerneric Views
+
+overwirte `get_queryset`,
+
+`get_serializer_class`
+
+#### ViewsSets
+
+`ModelViewSet`
+`ReadOnlyModelViewSet`
+
+#### Routers
+
+```
+router = SimpleRouter()
+router.register('products', views.ProductViewSet)
+router.register('collections', views.CollectionViewSet)
+router.urls#URLConf
+urlpatterns = [
+    path('', include(router.urls)),]
+```
+
+
+#### Nested Routers
